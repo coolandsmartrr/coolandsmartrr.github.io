@@ -1,1 +1,102 @@
-Hello World
+<h1 id="-">自作プログラム履歴書</h1>
+<p>これまで個人で作成したプログラムを紹介します。</p>
+<p>その他にもここで紹介しきれなかったプログラムはGitHubに公開しています。</p>
+<p><a href="https://github.com/coolandsmartrr?tab=repositories">Github: coolandsmartrr</a></p>
+<h2 id="-">スマートチケット</h2>
+<p><a href="https://github.com/coolandsmartrr/smartticket">Source Code</a></p>
+<p>ブロックチェーン上で認証するイベントチケットシステムを作成しました。主にコンサートなど催し物の入場での使用を想定しています。これまでチケットには転売問題があり、いわゆる「ダフ屋」が規定価格を上回る高額で販売している問題がありました。紙に印刷されたチケットは枚数や所有者によって物理的に入場者を制御していますが、紙のチケットは譲渡が容易であり、不正販売を防ぐことが難しいです。</p>
+<p>そこでブロックチェーンの起用を考えました。ブロックチェーンは誰もが運営・認証できるデータベースであり、不可逆的な暗号処理を使用しているため記録の改竄が極めて難しいです。Ethereumという帳簿項目の設定などのプログラミングが容易なブロックチェーンを使用し、電子チケットの帳簿を試験的に運営しました。電子チケットには所有者の情報・譲渡権利・譲渡条件などが記載されており、イベント主催者の許可なく譲渡することはできません。</p>
+<p>このプロジェクトでは、実際に芸能事務所を訪問し、タレントマネージャーの方にヒアリングを行いました。ヒアリングでもっとも難しかったところは暗号処理についての説明であり、新しい仕組みの普及のためには利用者に分かりやすい説明が不可欠だと痛感しました。</p>
+<h2 id="safecast-on-ipfs">Safecast-on-IPFS</h2>
+<p><a href="https://github.com/coolandsmartrr/safecast-ipfs">Source Code</a></p>
+<p>P2Pのネットワークで半永久的にデータを保存する方法とその情報の正確性を認証する方法を考案しました。データには保守性の問題があります。例えば、データをホスティングするサーバーがネットワークから切断されたら、そのデータの住所であるURIから以後データを取得できなくなります。（300系のHTTPリスポンスコードなどによって）転送先が案内されていたら無事にデータをアクセスできますが、サーバーの運営者がその類の例外処理を丁寧に対処されているとは限りません。場合によっては、外部からアクセスできるサーバー領域からデータが消失していることもあります。外部のサーバーがそのデータを複製していたら、そのデータを改めて取得することが可能ですが、2つの問題が浮上します。</p>
+<ol>
+<li>URIの検索にかかる手間</li>
+<li>データの正確性</li>
+</ol>
+<p>(1)については、ユーザーがインターネット上でその他のURIを探す必要があり、世間的に関心の低いデータは代替となる所在地が広く告知されてないため、新たなURIの検索に時間と工数が掛かります。</p>
+<p>(2)については、仮に代替となるデータ提供元を確保しても、データの正確性が保証されないことを指します。データの転送過程におけるデータの破損や、新しいホストによるデータの改竄などの可能性があります。</p>
+<p>これらを解決するため、2つの解決方法を提案しました：</p>
+<p>(1) 特定のサーバーに依存しないP2Pのネットワーク上でデータを公開し、不可変なURIでアクセス可能にすること。URIはデータの「確認番号」であるハッシュ値で存在するため、WebのURLスキームのようにアドレスを変更されることがありません。</p>
+<p>(2) ビットコインのブロックチェーンにデータの「確認番号」となるハッシュ値を記載し、その時点でデータがその形で存在していたことを証明すること。    ビットコインのブロックチェーンは「ブロック単位」で管理されていますが、ブロックのデータ構造として「コメント欄」が80バイトほどあります。そこにメルケルツリーというデータ構造でアップロードするデータのハッシュ値を並べ、2つずつのハッシュ値を算出し、最終的にツリーの頂点に立つハッシュ値を「ブロック」に記載しました。これでどれだけファイルがあってもコンパクトにハッシュ値を算出することができます。また、ユーザーの手元にメルケルツリーの「証憑」データがあり、第3者が正確性を検証できるようになっています。</p>
+<p>データは日本国内の放射能データ収集して誰でも利用可能にしている団体であるSafecastのものを使いました。幸いSafecastの運営状態は透明性が高いのでデータ消失の懸念はないですが、貴重な歴史データが元のサーバーから消失した実例があります。例えば、トランプ政権時に米国政府の国環境保護庁のサーバーから過去の環境データが消失しました。このように、データの運用方針・提供方法・ガバナンスなどがデータの保守性に強い影響を及ぼします。</p>
+<p>大学の卒業論文として制作しました。論文はGitHubに公開しています。</p>
+<h2 id="vr-">VR森林浴</h2>
+<p>（ソースコードは前のPCから復元次第、共有いたします）</p>
+<p>Unityで無限に森林が生えてくるVR環境を作成しました。ヘッドマウントディスプレイやなど画像処理の仕組みについて学ぶことが多かったです。また、3D環境を瞬時にレンダリングするための最適化に苦労し、遠くにある物体をビルボード化するなどのレンダリングテクニックに触れることができました。</p>
+<p>また、VR森林浴によるユーザーへの心理作用を測定しました。心理テストで被験者のストレス度を以下のタイミングで測りました。</p>
+<ol>
+<li>実験前</li>
+<li>数学問題によるストレス負荷後</li>
+<li>VR森林浴の使用後</li>
+</ol>
+<p>数学問題解答後にストレスの上昇、およびVR森林浴の使用後にストレスの軽減が観測できました。</p>
+<p>VR作品づくりの経験を活かし、関係者にVRについての的確な取材をすることができました：</p>
+<ul>
+<li><a href="http://rickyreports.jp/archives/miyamotoshigeru/">宮本茂（任天堂）</a></li>
+<li><a href="http://rickyreports.jp/archives/morpheus/">吉田修平（ソニー）</a></li>
+<li><a href="http://rickyreports.jp/archives/morpheus/">原田勝弘（バンダイナムコ）</a></li>
+<li><p><a href="http://rickyreports.jp/archives/ivr15-keynote/">舘暲（東京大学）</a></p>
+<p>なお、VRに懐疑的だったように受け止められた宮本茂氏の発言は、後日ネット掲示板の2ちゃんねるで炎上し、まとめサイトの「はちま起稿」のアクセスランキングで1位になりました。 </p>
+<p><a href="http://blog.esuteru.com/archives/7932067.html">リンク</a> </p>
+<p><a href="https://www.facebook.com/photo?fbid=10201928181405176&amp;set=a.1160275346077">スクリーンショット</a></p>
+</li>
+</ul>
+<p>研究会での発表資料を添付いたします。</p>
+<p>（同ディレクトリに&quot;最終発表.pptx&quot;として格納）</p>
+<h2 id="instafollow">InstaFollow</h2>
+<p><a href="https://github.com/coolandsmartrr/instaFollow">Source Code</a></p>
+<p>Instagramでフォローしているアカウントを別のアカウントにエキスポート・インポートするプログラムです。週末に手っ取り早く制作したく、学習コストを減らすため、豊富なドキュメンテーションで人気なSeleniumフレームワークでWebブラウザーの挙動を自動化しました。本来は公式のAPIを使用したかったですが、FacebookがCambridge Analyticaによる騒動を受けて、自社が提供するサービスに対して書き込めるAPIの提供を終了していました。Instagramサーバーのボット対策により429 Too Many RequestsのHTTPエラーがプログラム動作時に発生したため、アクセス頻度を乱数で調整して制約を回避しました。</p>
+<h2 id="http-server-code-in-c">HTTP Server Code in C</h2>
+<p>（ソースコードは前のPCから復元次第、共有いたします）</p>
+<p>学習目的にC言語でHTTPサーバーを作成しました。80番ポートのアクセス・解放・待機などの手順をこちらで全て実装しました。</p>
+<hr>
+<h1 id="-">おまけ</h1>
+<p>好きなプログラムやアルゴリズムを紹介します</p>
+<h2 id="quake-3-arena-fast-inverse-square-root">Quake 3 Arena - Fast Inverse Square Root</h2>
+<p><a href="https://github.com/id-Software/Quake-III-Arena/blob/dbe4ddb10315479fc00086f08e25d968b4b43c49/code/game/q_math.c#L552">Source Code</a></p>
+<p>ジョン・カーマック氏を筆頭とするid softwareの技術力は業界で話題を呼びますが、「Quake 3 Arena」がオープンソースで公開時に、平方根の逆数を迅速に算出するアルゴリズムが注目を集めました。ゲームグラフィックスの計算時にはベクトルをノーマライズする必要があるため、このような計算が頻繁に起きます。このアルゴリズムでの算出値は概算であるものの、ゲームには十分実用的であり、処理速度の向上をもたらします。</p>
+<p>通常、平方根の逆数の算出には以下のようなコードを書きます：</p>
+<pre><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;math.h&gt;</span></span>
+<span class="hljs-keyword">float</span> y = <span class="hljs-number">1</span>/<span class="hljs-built_in">sqrt</span>(x);
+</code></pre><p>しかし、割り算の実行は比較的に時間がかかります。代わりに「Quake 3 Arena」では以下のようにコードが記載されていました：</p>
+<pre><code><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">Q_rsqrt</span><span class="hljs-params">( <span class="hljs-keyword">float</span> number )</span>
+</span>{
+    <span class="hljs-keyword">long</span> i;
+    <span class="hljs-keyword">float</span> x2, y;
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">float</span> threehalfs = <span class="hljs-number">1.5F</span>;
+
+    x2 = number * <span class="hljs-number">0.5F</span>;
+    y  = number;
+    i  = * ( <span class="hljs-keyword">long</span> * ) &amp;y;                        <span class="hljs-comment">// evil floating point bit level hacking</span>
+    i  = <span class="hljs-number">0x5f3759df</span> - ( i &gt;&gt; <span class="hljs-number">1</span> );               <span class="hljs-comment">// what the fuck?</span>
+    y  = * ( <span class="hljs-keyword">float</span> * ) &amp;i;
+    y  = y * ( threehalfs - ( x2 * y * y ) );   <span class="hljs-comment">// 1st iteration</span>
+<span class="hljs-comment">//    y  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, this can be removed</span>
+
+    <span class="hljs-keyword">return</span> y
+}
+</code></pre><p>最初の変数はlong型ですが、メモリには32ビットの数値として格納されています：</p>
+<pre><code> <span class="hljs-number">00000000</span> <span class="hljs-number">00000000</span>  <span class="hljs-number">00000000</span>  <span class="hljs-number">00000000</span> 
+</code></pre><p>次の変数であるfloat型はIEEE 754で以下のように定義されています：</p>
+<pre><code><span class="hljs-symbol">0 </span>（+/-ビット）<span class="hljs-number">00000000</span> （指数ビット (<span class="hljs-number">2</span>^n-<span class="hljs-number">127</span>)）<span class="hljs-number">00000000000000000000000</span> （仮数ビット）
+</code></pre><p>float型の変数はビットシフト操作ができませんので、変数が格納されているメモリのアドレスをポインタとして渡してlong型として読み取ります:</p>
+<pre><code><span class="hljs-attribute">    i</span>  = * ( long * ) &amp;y;
+</code></pre><p>その後、<code>i &gt;&gt; 1</code>で左にビットシフト操作を行い、変数の値を倍増します。<code>0x5f3759df</code>からその値を引くことで誤差を縮めることができます。</p>
+<pre><code><span class="hljs-attribute">    i</span>  = 0x5f3759df - ( i &gt;&gt; 1 );
+</code></pre><p>上記の概算値をfloat型の変数yに格納します。</p>
+<pre><code><span class="hljs-attribute">    y</span>  = * ( float * ) &amp;i;
+</code></pre><p>次は、ニュートンの方法で誤差をさらに縮めます。ニュートンの方法では、とある$x$から$f(x)$とそれの導関数である$f&#39;(x)$で$f(x)/f&#39;(x)$を算出し、元の$x$から$f(x)/f&#39;(x)$を引きます。</p>
+<blockquote>
+<p><strong>Newton&#39;s Method</strong></p>
+<p>approximation1 = x - f(x)/f&#39;(x)</p>
+<p>error(x) = x^-2 - i</p>
+<p>approximation2 = x - error(x)/error&#39;(x)</p>
+<p>= x - (x^-2 - i) / (-2x^-3)</p>
+<p>= x(1.5 + 0.5ig^2)</p>
+</blockquote>
+<p>ソースコードでは、ニュートンの方法がこのように記載されています:</p>
+<pre><code>    y  = y * ( threehalfs - ( x2 * y * y ) );
+    // Editor<span class="hljs-symbol">'s</span> <span class="hljs-literal">Note</span>: x2 <span class="hljs-keyword">is</span> <span class="hljs-number">0.5</span> <span class="hljs-keyword">of</span> float <span class="hljs-keyword">variable</span> <span class="hljs-string">"number"</span>
+</code></pre><h2 id="wii-">Wii センサーバーの代替方法</h2>
+<p>学生時代のスキー合宿で友人がWiiを持ってきましたが、彼がセンサーバーを家に忘れたので、メニュー画面で起動したいゲームをWiiリモコンで指すことができず、ゲームソフトに遷移できませんでした。しかし、センサーバーは赤外線を出力していると知っていましたので、代わりに赤外線を出力できるライターを（火災予防の面から）システムのメニュー画面が出た時だけ使用して、無事に「大乱闘スマッシュブラザーズX」を起動し、その後はみんなで楽しむことができました。発案者の私は試合に負けても次のラウンドに参加させてもらうことができました。</p>
